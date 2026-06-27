@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tesla FSD Evaluation Routes — Vancouver & Burnaby</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tesla-red: #E31937;
+    --tesla-red-light: #FFF3F4;
+    --tesla-red-hover: #C8142F;
+    --dark: #111111;
+    --text: #333333;
+    --text-secondary: #666666;
+    --border: #E0E0E0;
+    --bg: #FAFAFA;
+    --bg-card: #FFFFFF;
+    --accent-blue: #0A84FF;
+    --row-alt: #F7F7F8;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,0.08);
+    --radius: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Header ─────────────────────────── */
+  .header {
+    background: var(--dark);
+    color: #fff;
+    padding: 56px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--tesla-red);
+  }
+  .header h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+  }
+  .header .subtitle {
+    font-size: clamp(1rem, 2.2vw, 1.25rem);
+    font-weight: 400;
+    color: #aaa;
+    margin-bottom: 10px;
+  }
+  .header .meta {
+    font-size: 0.85rem;
+    color: #777;
+    letter-spacing: 0.04em;
+  }
+  .header .meta span { color: var(--tesla-red); font-weight: 600; }
+
+  /* ── Container ──────────────────────── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ── Intro ──────────────────────────── */
+  .intro {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin: 32px auto;
+    max-width: 960px;
+    box-shadow: var(--shadow);
+  }
+  .intro p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+  .intro p:last-child { margin-bottom: 0; }
+
+  /* ── Section titles ─────────────────── */
+  .section-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin: 48px 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.02em;
+  }
+  .section-title .badge {
+    background: var(--tesla-red);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .route-meta {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+  .route-meta strong { color: var(--text); }
+
+  /* ── Tables ─────────────────────────── */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 28px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  thead th {
+    background: var(--dark);
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  thead th:first-child { border-radius: var(--radius) 0 0 0; }
+  thead th:last-child { border-radius: 0 var(--radius) 0 0; }
+  tbody td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: var(--row-alt); }
+  tbody tr:last-child td { border-bottom: none; }
+  .stop-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    background: var(--tesla-red);
+    color: #fff;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.78rem;
+    flex-shrink: 0;
+  }
+  .loc-name { font-weight: 600; color: var(--dark); }
+  .test-tags { color: var(--text-secondary); font-size: 0.84rem; }
+
+  /* ── Feature matrix ─────────────────── */
+  .dot-primary { color: var(--tesla-red); font-size: 1.2rem; font-weight: 700; }
+  .dot-secondary { color: #ccc; font-size: 1.2rem; }
+  .matrix-legend {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  /* ── Google Maps cards ──────────────── */
+  .maps-section { margin-top: 48px; }
+  .map-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .map-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .map-card .map-link {
+    display: inline-block;
+    margin: 8px 0 14px;
+    padding: 8px 20px;
+    background: var(--tesla-red);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .map-card .map-link:hover { background: var(--tesla-red-hover); }
+  .waypoint-table { width: 100%; font-size: 0.82rem; border-collapse: collapse; }
+  .waypoint-table th {
+    background: var(--row-alt);
+    font-weight: 600;
+    text-align: left;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border);
+  }
+  .waypoint-table td {
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .waypoint-table tr:last-child td { border-bottom: none; }
+  .pin-letter {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px;
+    background: var(--dark);
+    color: #fff;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.72rem;
+  }
+
+  /* ── Time windows ───────────────────── */
+  .time-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .time-slot {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .time-slot .hours {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .time-slot .level {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .time-slot .level.light { color: #34A853; }
+  .time-slot .level.moderate { color: #F59E0B; }
+  .time-slot .level.heavy { color: var(--tesla-red); }
+  .time-slot .best-for {
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* ── Safety box ─────────────────────── */
+  .safety-box {
+    background: var(--tesla-red-light);
+    border: 2px solid var(--tesla-red);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin: 32px 0;
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .safety-box strong { color: var(--tesla-red); }
+
+  /* ── Footer ─────────────────────────── */
+  .footer {
+    text-align: center;
+    padding: 32px 24px;
+    font-size: 0.78rem;
+    color: #999;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+  }
+
+  /* ── Print ──────────────────────────── */
+  @media print {
+    body { background: #fff; }
+    .header { padding: 32px 24px 28px; }
+    .map-card .map-link { background: #fff; color: var(--tesla-red); border: 1px solid var(--tesla-red); }
+    .table-wrap, .map-card, .time-slot { box-shadow: none; }
+  }
+
+  @media (max-width: 640px) {
+    .header { padding: 40px 16px 32px; }
+    .intro, .map-card { padding: 20px; }
+    thead th, tbody td { padding: 8px 10px; font-size: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<header class="header">
+  <h1>Tesla Full Self-Driving (Supervised)</h1>
+  <div class="subtitle">Comprehensive Evaluation Route Guide</div>
+  <div class="meta">2026 Model Y &nbsp;<span>|</span>&nbsp; Vancouver &amp; Burnaby, British Columbia</div>
+</header>
+
+<!-- ═══════════════════════ INTRO ════════════════════════ -->
+<div class="container">
+  <div class="intro">
+    <p>This guide presents three purpose-built driving routes designed to exercise every major capability of Tesla Full Self-Driving (Supervised) across the Lower Mainland. Each route systematically exposes the system to residential streets, school zones, highway merging, complex urban intersections, bridge crossings, roundabouts, pedestrian-heavy areas, construction zones, and parking lots.</p>
+    <p>Tesla offers FSD demonstrations in the Vancouver area, and recent coast-to-coast Canadian FSD drives have started from this region, making it one of the most extensively exercised FSD territories in Canada.</p>
+  </div>
+
+  <!-- ═══════════════════ ROUTE 1 ═══════════════════════ -->
+  <h2 class="section-title">Route 1 — Burnaby → Vancouver → Burnaby <span class="badge">Recommended</span></h2>
+  <p class="route-meta"><strong>Duration:</strong> 2.5–3 hours &nbsp;|&nbsp; <strong>Distance:</strong> ~75 km &nbsp;|&nbsp; <strong>Difficulty:</strong> High — covers every major driving scenario in one loop.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Stop</th><th>Location</th><th>Key Streets</th><th>FSD Tests</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="stop-num">1</span></td>
+          <td class="loc-name">Brentwood / Burnaby</td>
+          <td>Lougheed Hwy, Willingdon Ave, Canada Way</td>
+          <td class="test-tags">Traffic lights, multi-lane turns, stop-and-go traffic</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">2</span></td>
+          <td class="loc-name">Burnaby Lake Area</td>
+          <td>Kensington Ave, Sprott St, Winston St</td>
+          <td class="test-tags">Residential driving, speed changes, school zones, cyclists</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">3</span></td>
+          <td class="loc-name">Highway 1 West</td>
+          <td>Trans-Canada Highway on-ramp</td>
+          <td class="test-tags">Highway merging, automatic lane changes, speed adjustment, HOV recognition</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">4</span></td>
+          <td class="loc-name">East Vancouver</td>
+          <td>Grandview Hwy, Boundary Rd, E Broadway</td>
+          <td class="test-tags">Busy intersections, left turns, pedestrian-heavy crossings</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">5</span></td>
+          <td class="loc-name">Olympic Village / False Creek</td>
+          <td>Quebec St, Main St, Terminal Ave</td>
+          <td class="test-tags">Bike lanes, narrow lanes, heavy pedestrian traffic, construction detours</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">6</span></td>
+          <td class="loc-name">Downtown Vancouver</td>
+          <td>Georgia St, Burrard St, Seymour St, Cambie Bridge</td>
+          <td class="test-tags">Complex intersections, lane selection, one-way streets, heavy traffic</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">7</span></td>
+          <td class="loc-name">Stanley Park Loop</td>
+          <td>Full park perimeter road</td>
+          <td class="test-tags">Curves, pedestrians, cyclists, speed limit compliance</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">8</span></td>
+          <td class="loc-name">Lions Gate → Hwy 1 Return</td>
+          <td>Lions Gate Bridge, North Vancouver, Hwy 1 East</td>
+          <td class="test-tags">Bridge driving, highway transitions, higher-speed navigation</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════ ROUTE 2 ═══════════════════════ -->
+  <h2 class="section-title">Route 2 — Burnaby Challenge Route</h2>
+  <p class="route-meta"><strong>Duration:</strong> ~1.5 hours &nbsp;|&nbsp; <strong>Difficulty:</strong> Medium — focused on dense urban traffic and unprotected turns.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Stop</th><th>Location</th><th>Key Streets</th><th>FSD Tests</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="stop-num">1</span></td>
+          <td class="loc-name">Lougheed / Gilmore</td>
+          <td>Lougheed Hwy, Gilmore Ave</td>
+          <td class="test-tags">Dense traffic, numerous traffic lights</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">2</span></td>
+          <td class="loc-name">Brentwood / BCIT</td>
+          <td>Willingdon Ave, Canada Way</td>
+          <td class="test-tags">Multi-lane navigation, campus pedestrians</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">3</span></td>
+          <td class="loc-name">Marine Way / Byrne Rd</td>
+          <td>Marine Way, Byrne Rd</td>
+          <td class="test-tags">Industrial traffic, speed transitions</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">4</span></td>
+          <td class="loc-name">Market Crossing</td>
+          <td>Market Crossing shopping area</td>
+          <td class="test-tags">Shopping-centre parking, unprotected left turns</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">5</span></td>
+          <td class="loc-name">Boundary Rd Return</td>
+          <td>Boundary Rd north to Brentwood</td>
+          <td class="test-tags">Busy arterial, traffic-light sequence</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════ ROUTE 3 ═══════════════════════ -->
+  <h2 class="section-title">Route 3 — FSD "Stress Test" <span class="badge" style="background:#111">Via UBC &amp; Kitsilano</span></h2>
+  <p class="route-meta"><strong>Duration:</strong> ~3 hours &nbsp;|&nbsp; <strong>Difficulty:</strong> Very High — adds hills, roundabouts, tourist traffic, and complex parking lots.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Stop</th><th>Location</th><th>Key Streets</th><th>FSD Tests</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="stop-num">1</span></td>
+          <td class="loc-name">Burnaby → Downtown</td>
+          <td>Via Hwy 1 / surface streets</td>
+          <td class="test-tags">Highway merge, urban transition</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">2</span></td>
+          <td class="loc-name">University Boulevard</td>
+          <td>W 4th Ave, University Blvd</td>
+          <td class="test-tags">Hills, roundabouts, campus traffic</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">3</span></td>
+          <td class="loc-name">UBC / Spanish Banks</td>
+          <td>NW Marine Dr, Spanish Banks area</td>
+          <td class="test-tags">Curves, scenic narrow roads, cyclists</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">4</span></td>
+          <td class="loc-name">Kitsilano</td>
+          <td>Cornwall Ave, Arbutus St</td>
+          <td class="test-tags">Neighbourhood streets, pedestrians, stop signs</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">5</span></td>
+          <td class="loc-name">Granville Island</td>
+          <td>Anderson St, Johnston St</td>
+          <td class="test-tags">Narrow roads, complex parking lots, tourist traffic</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">6</span></td>
+          <td class="loc-name">Olympic Village → Downtown</td>
+          <td>Quebec St, Cambie Bridge, Georgia St</td>
+          <td class="test-tags">Full urban gauntlet, one-way streets, heavy traffic</td>
+        </tr>
+        <tr>
+          <td><span class="stop-num">7</span></td>
+          <td class="loc-name">Return to Burnaby</td>
+          <td>Hwy 1 East</td>
+          <td class="test-tags">Highway re-entry, higher-speed navigation</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════ FEATURE MATRIX ════════════════ -->
+  <h2 class="section-title">FSD Feature Evaluation Matrix</h2>
+  <p class="route-meta">Use this matrix to track which capabilities are tested on each route. All three routes combined cover every feature.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Feature</th><th style="text-align:center">Route 1</th><th style="text-align:center">Route 2</th><th style="text-align:center">Route 3</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Automatic Lane Changes</td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-secondary">○</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+        <tr><td>Highway Merging</td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-secondary">○</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+        <tr><td>Left-Turn Decision Making</td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+        <tr><td>Roundabout Handling</td><td style="text-align:center"><span class="dot-secondary">○</span></td><td style="text-align:center"><span class="dot-secondary">○</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+        <tr><td>Pedestrian Yielding</td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+        <tr><td>Cyclist Awareness</td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-secondary">○</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+        <tr><td>Traffic Light Recognition</td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+        <tr><td>Stop Sign Behaviour</td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+        <tr><td>Speed Adaptation</td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+        <tr><td>Parking Lot Navigation</td><td style="text-align:center"><span class="dot-secondary">○</span></td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+        <tr><td>Bridge Driving</td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-secondary">○</span></td><td style="text-align:center"><span class="dot-secondary">○</span></td></tr>
+        <tr><td>HOV Lane Recognition</td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-secondary">○</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+        <tr><td>Construction Zone Handling</td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-secondary">○</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+        <tr><td>Hills &amp; Grade Changes</td><td style="text-align:center"><span class="dot-secondary">○</span></td><td style="text-align:center"><span class="dot-secondary">○</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+        <tr><td>Narrow Road Navigation</td><td style="text-align:center"><span class="dot-primary">●</span></td><td style="text-align:center"><span class="dot-secondary">○</span></td><td style="text-align:center"><span class="dot-primary">●</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="matrix-legend"><span class="dot-primary">●</span> Primary test &nbsp;&nbsp;&nbsp; <span class="dot-secondary">○</span> Incidental or not covered</p>
+
+  <!-- ═══════════════════ TEST TIMES ════════════════════ -->
+  <h2 class="section-title">Recommended Testing Windows</h2>
+  <div class="time-card">
+    <div class="time-slot">
+      <div class="hours">9:30 – 11:30 AM</div>
+      <div class="level light">Light Traffic</div>
+      <div class="best-for">Observing baseline FSD behaviour without congestion stress</div>
+    </div>
+    <div class="time-slot">
+      <div class="hours">2:00 – 4:00 PM</div>
+      <div class="level moderate">Moderate Traffic</div>
+      <div class="best-for">Balanced evaluation across all driving conditions</div>
+    </div>
+    <div class="time-slot">
+      <div class="hours">5:00 – 6:30 PM</div>
+      <div class="level heavy">Heavy (Rush Hour)</div>
+      <div class="best-for">Stress-testing stop-and-go performance and lane-change decisions</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ SAFETY ════════════════════════ -->
+  <div class="safety-box">
+    <strong>⚠ SAFETY REMINDER:</strong> Full Self-Driving is <strong>supervised</strong>. You must keep your hands ready to take control and remain attentive at all times. Be prepared to intervene if the vehicle encounters unexpected situations, especially in construction zones, around emergency vehicles, or in heavy pedestrian areas. Always obey all traffic laws regardless of FSD behaviour.
+  </div>
+
+  <!-- ═══════════════════ GOOGLE MAPS ═══════════════════ -->
+  <div class="maps-section">
+    <h2 class="section-title">Google Maps Quick Links</h2>
+    <p class="route-meta">Open these links on your phone or vehicle browser to follow each route with turn-by-turn navigation. Google Maps labels each waypoint with a letter (A, B, C…). The tables below map each stop number to the corresponding Google Maps pin.</p>
+
+    <!-- Route 1 Map Card -->
+    <div class="map-card">
+      <h3>Route 1 — Burnaby → Vancouver → Burnaby (Recommended)</h3>
+      <a class="map-link" href="https://www.google.com/maps/dir/Brentwood+Town+Centre,+Burnaby,+BC/Burnaby+Lake+Regional+Park,+Burnaby,+BC/Olympic+Village,+Vancouver,+BC/Stanley+Park,+Vancouver,+BC/Lions+Gate+Bridge,+Vancouver,+BC/Brentwood+Town+Centre,+Burnaby,+BC/" target="_blank" rel="noopener">Open in Google Maps ↗</a>
+      <table class="waypoint-table">
+        <thead><tr><th>Stop</th><th>Maps Pin</th><th>Location</th></tr></thead>
+        <tbody>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">1</span></td><td><span class="pin-letter">A</span></td><td>Brentwood Town Centre, Burnaby (START)</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">2</span></td><td><span class="pin-letter">B</span></td><td>Burnaby Lake Regional Park</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">3</span></td><td><span class="pin-letter">C</span></td><td>Highway 1 West → East Vancouver → Olympic Village</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">4</span></td><td><span class="pin-letter">D</span></td><td>Stanley Park Loop</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">5</span></td><td><span class="pin-letter">E</span></td><td>Lions Gate Bridge → North Vancouver</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">6</span></td><td><span class="pin-letter">F</span></td><td>Brentwood Town Centre, Burnaby (END)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Route 2 Map Card -->
+    <div class="map-card">
+      <h3>Route 2 — Burnaby Challenge Route</h3>
+      <a class="map-link" href="https://www.google.com/maps/dir/Brentwood+Town+Centre,+Burnaby,+BC/Gilmore+Ave+and+Lougheed+Hwy,+Burnaby,+BC/BCIT+Burnaby+Campus,+3700+Willingdon+Ave,+Burnaby,+BC/Marine+Way+and+Byrne+Rd,+Burnaby,+BC/Market+Crossing,+Burnaby,+BC/Boundary+Rd+and+Lougheed+Hwy,+Burnaby,+BC/Brentwood+Town+Centre,+Burnaby,+BC/" target="_blank" rel="noopener">Open in Google Maps ↗</a>
+      <table class="waypoint-table">
+        <thead><tr><th>Stop</th><th>Maps Pin</th><th>Location</th></tr></thead>
+        <tbody>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">1</span></td><td><span class="pin-letter">A</span></td><td>Brentwood Town Centre, Burnaby (START)</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">2</span></td><td><span class="pin-letter">B</span></td><td>Gilmore Ave / Lougheed Hwy</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">3</span></td><td><span class="pin-letter">C</span></td><td>BCIT Burnaby Campus, Willingdon Ave</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">4</span></td><td><span class="pin-letter">D</span></td><td>Marine Way / Byrne Rd</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">5</span></td><td><span class="pin-letter">E</span></td><td>Market Crossing</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">6</span></td><td><span class="pin-letter">F</span></td><td>Boundary Rd / Lougheed Hwy</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">7</span></td><td><span class="pin-letter">G</span></td><td>Brentwood Town Centre, Burnaby (END)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Route 3 Map Card -->
+    <div class="map-card">
+      <h3>Route 3 — FSD Stress Test (via UBC &amp; Kitsilano)</h3>
+      <a class="map-link" href="https://www.google.com/maps/dir/Brentwood+Town+Centre,+Burnaby,+BC/University+of+British+Columbia,+Vancouver,+BC/Granville+Island,+Vancouver,+BC/Olympic+Village,+Vancouver,+BC/Brentwood+Town+Centre,+Burnaby,+BC/" target="_blank" rel="noopener">Open in Google Maps ↗</a>
+      <table class="waypoint-table">
+        <thead><tr><th>Stop</th><th>Maps Pin</th><th>Location</th></tr></thead>
+        <tbody>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">1</span></td><td><span class="pin-letter">A</span></td><td>Brentwood Town Centre, Burnaby (START)</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">2</span></td><td><span class="pin-letter">B</span></td><td>University of British Columbia</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">3</span></td><td><span class="pin-letter">C</span></td><td>Granville Island</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">4</span></td><td><span class="pin-letter">D</span></td><td>Olympic Village</td></tr>
+          <tr><td><span class="stop-num" style="width:22px;height:22px;font-size:0.7rem">5</span></td><td><span class="pin-letter">E</span></td><td>Brentwood Town Centre, Burnaby (END)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ FOOTER ════════════════════════ -->
+  <footer class="footer">
+    Prepared June 27, 2026 &nbsp;|&nbsp; Data sources: Tesla.com, Google Maps, local driving knowledge
+  </footer>
+</div>
+
+</body>
+</html>
